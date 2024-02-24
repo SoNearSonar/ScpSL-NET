@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ScpSL.Web.Models;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -24,19 +26,16 @@ namespace ScpSL.Web
         public bool AddNicknames { get; set; }
         public bool AddIsOnline { get; set; }
 
-        public ScpSLClient()
+        public ScpSLClient(string apiKey = "")
         {
             _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "ScpSL-NET/1.0");
-        }
 
-        public ScpSLClient(string apiKey)
-        {
-            _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "ScpSL-NET/1.0");
-            _apiKey = apiKey;
+            if (!string.IsNullOrWhiteSpace(apiKey))
+            {
+                _apiKey = apiKey;
+            }
         }
 
         public async Task<string> GetIPAddress()
@@ -68,6 +67,14 @@ namespace ScpSL.Web
 
         public async Task<ServerInfo> Get3rdPartyServerInfo(string url)
         {
+            bool result = Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+            if (!result)
+            {
+                throw new HttpRequestException("Invalid URL provided");
+            }
+
             string resultQuery = ConstructServerQuery(url);
             HttpResponseMessage message = await _httpClient.GetAsync(resultQuery);
 
@@ -80,7 +87,7 @@ namespace ScpSL.Web
             throw new HttpRequestException($"{(int)message.StatusCode} {message.StatusCode} code - Request was not successful");
         }
 
-        public async Task<FullServerInfo> GetFullServerInfo(bool isMinimalSearch = false)
+        public async Task<List<FullServerInfo>> GetFullServerInfo(bool isMinimalSearch = false)
         {
             string resultQuery = ConstructFullServerQuery(_northwoodApiUrl + "/lobbylist.php?format=json", isMinimalSearch);
             HttpResponseMessage message = await _httpClient.GetAsync(resultQuery);
@@ -88,20 +95,28 @@ namespace ScpSL.Web
             if (message.StatusCode == HttpStatusCode.OK)
             {
                 string contents = await message.Content.ReadAsStringAsync();
-                return DeserializeObject<FullServerInfo>(contents);
+                return DeserializeObject<List<FullServerInfo>>(contents);
             }
 
             throw new HttpRequestException($"{(int)message.StatusCode} {message.StatusCode} code - Request was not successful");
         }
 
-        public async Task<FullServerInfo> Get3rdPartyFullServerInfo(string url)
+        public async Task<List<FullServerInfo>> Get3rdPartyFullServerInfo(string url)
         {
+            bool result = Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+            if (!result)
+            {
+                throw new HttpRequestException("Invalid URL provided");
+            }
+
             HttpResponseMessage message = await _httpClient.GetAsync(url);
 
             if (message.StatusCode == HttpStatusCode.OK)
             {
                 string contents = await message.Content.ReadAsStringAsync();
-                return DeserializeObject<FullServerInfo>(contents);
+                return DeserializeObject<List<FullServerInfo>>(contents);
             }
 
             throw new HttpRequestException($"{(int)message.StatusCode} {message.StatusCode} code - Request was not successful");
