@@ -15,8 +15,8 @@ namespace ScpSL.Web.Tests
         public void TestGetIPAddress_ReturnsIPAddress()
         {
             ScpSLClient client = new ScpSLClient();
-            string IPAddress = client.GetIPAddress().Result;
-            Assert.IsNotNull(IPAddress);
+            string ipAddress = client.GetIPAddress().Result;
+            Assert.IsNotNull(ipAddress);
         }
 
         [TestMethod]
