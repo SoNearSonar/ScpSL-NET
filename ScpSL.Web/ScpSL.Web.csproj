@@ -3,7 +3,28 @@
   <PropertyGroup>
 	<TargetFrameworks>net8.0;net7.0;net6.0;net5.0;netstandard2.1;netstandard2.0</TargetFrameworks>
 	<LangVersion>9.0</LangVersion>
+	<Title>ScpSL.Web</Title>
+	<Authors>SoNearSonar</Authors>
+	<Description>An improved client for SCP: Secret Laboratory's lobby/server API &amp;amp; unofficial ones, written in C#/NET. Successor to ScpSLAPI-NET</Description>
+	<PackageProjectUrl>https://github.com/SoNearSonar/ScpSL-NET</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/SoNearSonar/ScpSL-NET</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageTags>c#;api;scp;web</PackageTags>
+	<PackageReleaseNotes>Initial release</PackageReleaseNotes>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
