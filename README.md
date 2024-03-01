@@ -4,6 +4,9 @@ An improved client for SCP: Secret Laboratory's lobby/server API &amp; unofficia
 ## Predecessor:
 [ScpSLAPI-NET](https://github.com/SoNearSonar/ScpSLAPI-NET)
 
+## NuGet Package:
+[![ScpSL.Web NuGet](https://img.shields.io/nuget/vpre/ScpSL.Web?label=ScpSL.Web&style=for-the-badge)](https://www.nuget.org/packages/ScpSL.Web/)
+
 ## Differences:
 - .NET Standard 2.0+ support (Works on .NET Framework 4.6.1 - 4.8.1 as well as .NET 5.0+)
 - Settings objects are removed for all API calls in favor of properties per client and method parameters
