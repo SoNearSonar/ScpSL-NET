@@ -1,4 +1,4 @@
-# Using ScpSLAPI-NET
+# Using ScpSL-NET
 This project is a API wrapper for SCP: Secret Laboratory's server web API with additional support for 3rd party server web API's. It supports the following functions:
 - Getting your IP address
 - Getting information about your servers
