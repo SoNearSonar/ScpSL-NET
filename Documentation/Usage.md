@@ -80,7 +80,7 @@ Assert.IsTrue(serverInfo.Servers[0].ID != 0);
 Assert.IsTrue(serverInfo.Servers[0].Port != 0);
 ```
 
-### Getting lobby list from 3rd party API
+### Getting lobby list from 3rd party web API
 ```csharp
 // Arrange
 ScpSLClient client = new ScpSLClient("api_key");
